@@ -59,7 +59,28 @@
                     Console.Write("%");
 
             }
+            else if (keyInfo.Key == ConsoleKey.LeftArrow)
+            {
+                // Y가 증가 
+                newXPosition = --currentXPosition;
+                newYPosition = currentYPosition;
 
+                Console.Clear();
+                Console.SetCursorPosition(newXPosition, newYPosition);
+                Console.Write("%");
+
+            }
+            else if (keyInfo.Key == ConsoleKey.RightArrow)
+            {
+                // Y가 증가 
+                newXPosition = ++currentXPosition;
+                newYPosition = currentYPosition;
+
+                Console.Clear();
+                Console.SetCursorPosition(newXPosition, newYPosition);
+                Console.Write("%");
+
+            }
 
 
 
