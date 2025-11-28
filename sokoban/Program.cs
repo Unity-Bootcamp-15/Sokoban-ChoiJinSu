@@ -37,7 +37,7 @@
             while (true) { 
 
             ConsoleKeyInfo keyInfo = Console.ReadKey();// 키를 입력 받았다
-                if (currentXPosition >= 0 || currentYPosition >= 0) { 
+                if (Console.GetCursorPosition().Left >= Console.BufferWidth || Console.GetCursorPosition().Top >= Console.BufferHeight) { 
             
                         if (keyInfo.Key == ConsoleKey.DownArrow)
                         {
@@ -45,7 +45,7 @@
                            newXPosition = currentXPosition;
                            newYPosition = ++currentYPosition;
 
-                                //Console.Clear();
+                                Console.Clear();
                                 Console.SetCursorPosition(newXPosition, newYPosition);
                                 Console.Write("%");
 
@@ -81,6 +81,14 @@
                             Console.Clear();
                             Console.SetCursorPosition(newXPosition, newYPosition);
                             Console.Write("%");
+
+
+                        // 벽을 만들어라
+                        for(int i = 0; i <  30; i++)
+                        {
+                            Console.Write('■');
+                        }
+                        
 
                         }
                  }
