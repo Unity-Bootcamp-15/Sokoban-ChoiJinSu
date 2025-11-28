@@ -43,7 +43,7 @@
                newXPosition = currentXPosition;
                newYPosition = ++currentYPosition;
 
-                    Console.Clear();
+                    //Console.Clear();
                     Console.SetCursorPosition(newXPosition, newYPosition);
                     Console.Write("%");
 
@@ -81,9 +81,7 @@
                 Console.Write("%");
 
             }
-
-
-
+            
             }
         }
     }
