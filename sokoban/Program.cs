@@ -37,51 +37,53 @@
             while (true) { 
 
             ConsoleKeyInfo keyInfo = Console.ReadKey();// 키를 입력 받았다
-            if (keyInfo.Key == ConsoleKey.DownArrow)
-            {
-               // Y가 증가 
-               newXPosition = currentXPosition;
-               newYPosition = ++currentYPosition;
-
-                    //Console.Clear();
-                    Console.SetCursorPosition(newXPosition, newYPosition);
-                    Console.Write("%");
-
-            }
-            else if (keyInfo.Key == ConsoleKey.UpArrow)
-                {
-                    // Y가 증가 
-                    newXPosition = currentXPosition;
-                    newYPosition = --currentYPosition;
-
-                    Console.Clear();
-                    Console.SetCursorPosition(newXPosition, newYPosition);
-                    Console.Write("%");
-
-            }
-            else if (keyInfo.Key == ConsoleKey.LeftArrow)
-            {
-                // Y가 증가 
-                newXPosition = --currentXPosition;
-                newYPosition = currentYPosition;
-
-                Console.Clear();
-                Console.SetCursorPosition(newXPosition, newYPosition);
-                Console.Write("%");
-
-            }
-            else if (keyInfo.Key == ConsoleKey.RightArrow)
-            {
-                // Y가 증가 
-                newXPosition = ++currentXPosition;
-                newYPosition = currentYPosition;
-
-                Console.Clear();
-                Console.SetCursorPosition(newXPosition, newYPosition);
-                Console.Write("%");
-
-            }
+                if (currentXPosition >= 0) { 
             
+                        if (keyInfo.Key == ConsoleKey.DownArrow)
+                        {
+                           // 아래로간다 > Y가 증가 
+                           newXPosition = currentXPosition;
+                           newYPosition = ++currentYPosition;
+
+                                //Console.Clear();
+                                Console.SetCursorPosition(newXPosition, newYPosition);
+                                Console.Write("%");
+
+                        }
+                        else if (keyInfo.Key == ConsoleKey.UpArrow)
+                            {
+                                //위로 간다 > Y가 감소 
+                                newXPosition = currentXPosition;
+                                newYPosition = --currentYPosition;
+
+                                Console.Clear();
+                                Console.SetCursorPosition(newXPosition, newYPosition);
+                                Console.Write("%");
+
+                        }
+                        else if (keyInfo.Key == ConsoleKey.LeftArrow)
+                        {
+                            // 왼쪽으로 > X가 감소
+                            newXPosition = --currentXPosition;
+                            newYPosition = currentYPosition;
+
+                            Console.Clear();
+                            Console.SetCursorPosition(newXPosition, newYPosition);
+                            Console.Write("%");
+
+                        }
+                        else if (keyInfo.Key == ConsoleKey.RightArrow)
+                        {
+                            // 오른쪽으로 > X가 증가 
+                            newXPosition = ++currentXPosition;
+                            newYPosition = currentYPosition;
+
+                            Console.Clear();
+                            Console.SetCursorPosition(newXPosition, newYPosition);
+                            Console.Write("%");
+
+                        }
+                 }
             }
         }
     }
