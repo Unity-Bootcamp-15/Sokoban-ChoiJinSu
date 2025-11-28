@@ -37,7 +37,7 @@
             while (true) { 
 
             ConsoleKeyInfo keyInfo = Console.ReadKey();// 키를 입력 받았다
-                if (currentXPosition >= 0) { 
+                if (currentXPosition >= 0 && currentYPosition >= 0) { 
             
                         if (keyInfo.Key == ConsoleKey.DownArrow)
                         {
