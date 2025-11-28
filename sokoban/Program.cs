@@ -107,34 +107,26 @@ while (true)
         //    //// 위에서 부딪힘 > 위로 보내고
         if (keyInfo.Key == ConsoleKey.DownArrow)
         {
-
             // 아래로간다 > Y가 증가 
-
             YPosition = Math.Min(wallY, YPosition + 1);
-
 
         }
         else if (keyInfo.Key == ConsoleKey.UpArrow)
         {
             // 위로간다 > Y가 감소 
-
             YPosition = Math.Max(wallY, YPosition - 1);
-
         }
         else if (keyInfo.Key == ConsoleKey.LeftArrow)
         {
 
             // playerX < 0 > -1 로 오류 >Math라이브러리를 써보자
 
-            //Console.SetCursorPosition(newXPosition, newYPosition);
             XPosition = Math.Max(wallX, XPosition - 1);
 
         }
         else if (keyInfo.Key == ConsoleKey.RightArrow)
         {
-      
             XPosition = Math.Min(wallX, XPosition + 1);
-
         }
     }
 
