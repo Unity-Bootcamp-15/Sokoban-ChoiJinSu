@@ -2,6 +2,18 @@
 {
     internal class Program
     {
+
+        enum Direction { 
+        
+           None,
+           Left,
+           Right,
+           Down,
+           Up
+        
+        
+        }
+        
         static void Main(string[] args)
         {
             // 키 입력 처리
@@ -28,66 +40,94 @@
                 // 라면 이라 했으니 선택문으로 가야한다
 
                 // 게임데이터 초기화
-                int x = 5;
-                int y = 10;
+                int playerX = 5;
+                int playerY = 10;
+                int mapSizeMaxX = 10;
+                int mapSizeMaxY = 10;
+                Direction PlayerDirection = Direction.None;
                 //--------------- Render -----------------
                 Console.Clear();
-                Console.SetCursorPosition(x, y);
-                Console.Write("0");
+                Console.SetCursorPosition(playerX, playerY);
+                Console.Write("P");
 
                 // --------------------------ProcessInput--------------------
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
 
                 // ------------------------------Update --------------------
-                // 플레이어 이동 처리
-                if (keyInfo.Key == ConsoleKey.DownArrow)
+                // 플레이어 이동 처리 > rangeOutOf오류 처리
+                int newPlayerX = playerX;
+                int newPlayerY = playerY;
+
+                switch (PlayerDirection)
                 {
-
-                    // 1-1 .플레이어가 아래로 이동하게 해라 => 
-                    // 이동이라는 건 좌표가 바뀐다는 거지 > 그럼 x,y좌표가 필요하겠네 > 좌표 어떻게 구해?? > Y값을 담아줘야겠네
-                    // 아래로 가려면 y값이 커져야해 > ++
-                    y = y + 1; //++y , y += 1
-
-                    // 어? 캐릭터가 없네? > 다시 그려줘야해
-                    // 위치 입력 > 캐릭터 출력
-                    // Render
-                    // ProcessInput
-                    // Update 
-                    //이 세가지를 묶어서 FrameWork라 한다
-                    // 이러한 과정 하나를 Frame이라 한다
-                    // 프레임워크 : 뼈대 > 응용프로그램의 동작 순서
-                    // 그리는 단계 > 키 입력 > 업데이트(게임월드를 최신화) 
-
+                    case Direction.Left:
+                        newPlayerX = Math.Max(mapSizeMaxX, playerX - 1);
+                        break;
+                    case Direction.Right:
+                        newPlayerX = Math.Min(mapSizeMaxX, playerX + 1);
+                        break;
+                    case Direction.Up:
+                        newPlayerY = Math.Max(mapSizeMaxY, playerX - 1);
+                        break;
+                    case Direction.Down:
+                        newPlayerY = Math.Min(mapSizeMaxY, playerX + 1);
+                        break;
+                    default: 
+                        Console.Clear();
+                        //Log를 이용한 오류 처리
+                        Console.WriteLine($"[Error] at 플레이어 이동 처리 : 잘못된 방향입니다.{PlayerDirection}");
+                        return; //break하면 그냥 switch문만 벗어나는 거니까 return처리
                 }
-                if (keyInfo.Key == ConsoleKey.UpArrow)
-                {
-
-                    // 1-1 .플레이어가 아래로 이동하게 해라 => 
-                    // 이동이라는 건 좌표가 바뀐다는 거지 > 그럼 x,y좌표가 필요하겠네 > 좌표 어떻게 구해?? > Y값을 담아줘야겠네
-                    // 아래로 가려면 y값이 커져야해 > ++
-                    y = y - 1;
-                    // 위치 입력 > 캐릭터 출력
-                }
-                if (keyInfo.Key == ConsoleKey.LeftArrow)
-                {
-
-                    // 1-1 .플레이어가 아래로 이동하게 해라 => 
-                    // 이동이라는 건 좌표가 바뀐다는 거지 > 그럼 x,y좌표가 필요하겠네 > 좌표 어떻게 구해?? > Y값을 담아줘야겠네
-                    // 아래로 가려면 y값이 커져야해 > ++
-                    x = x - 1;
-                    // 위치 입력 > 캐릭터 출력
-                }
-                if (keyInfo.Key == ConsoleKey.RightArrow)
-                {
-
-                    // 1-1 .플레이어가 아래로 이동하게 해라 => 
-                    // 이동이라는 건 좌표가 바뀐다는 거지 > 그럼 x,y좌표가 필요하겠네 > 좌표 어떻게 구해?? > Y값을 담아줘야겠네
-                    // 아래로 가려면 y값이 커져야해 > ++
-                    x = x + 1;
-                    // 위치 입력 > 캐릭터 출력
 
 
-                }
+                //if (keyInfo.Key == ConsoleKey.DownArrow)
+                //{
+
+                //    // 1-1 .플레이어가 아래로 이동하게 해라 => 
+                //    // 이동이라는 건 좌표가 바뀐다는 거지 > 그럼 x,y좌표가 필요하겠네 > 좌표 어떻게 구해?? > Y값을 담아줘야겠네
+                //    // 아래로 가려면 y값이 커져야해 > ++
+                //    playerY = playerY + 1; //++y , y += 1
+
+                //    // 어? 캐릭터가 없네? > 다시 그려줘야해
+                //    // 위치 입력 > 캐릭터 출력
+                //    // Render
+                //    // ProcessInput
+                //    // Update 
+                //    //이 세가지를 묶어서 FrameWork라 한다
+                //    // 이러한 과정 하나를 Frame이라 한다
+                //    // 프레임워크 : 뼈대 > 응용프로그램의 동작 순서
+                //    // 그리는 단계 > 키 입력 > 업데이트(게임월드를 최신화) 
+
+                //}
+                //if (keyInfo.Key == ConsoleKey.UpArrow)
+                //{
+
+                //    // 1-1 .플레이어가 아래로 이동하게 해라 => 
+                //    // 이동이라는 건 좌표가 바뀐다는 거지 > 그럼 x,y좌표가 필요하겠네 > 좌표 어떻게 구해?? > Y값을 담아줘야겠네
+                //    // 아래로 가려면 y값이 커져야해 > ++
+                //    playerY = playerY - 1;
+                //    // 위치 입력 > 캐릭터 출력
+                //}
+                //if (keyInfo.Key == ConsoleKey.LeftArrow)
+                //{
+
+                //    // 1-1 .플레이어가 아래로 이동하게 해라 => 
+                //    // 이동이라는 건 좌표가 바뀐다는 거지 > 그럼 x,y좌표가 필요하겠네 > 좌표 어떻게 구해?? > Y값을 담아줘야겠네
+                //    // 아래로 가려면 y값이 커져야해 > ++
+                //    playerX = playerX - 1;
+                //    // 위치 입력 > 캐릭터 출력
+                //}
+                //if (keyInfo.Key == ConsoleKey.RightArrow)
+                //{
+
+                //    // 1-1 .플레이어가 아래로 이동하게 해라 => 
+                //    // 이동이라는 건 좌표가 바뀐다는 거지 > 그럼 x,y좌표가 필요하겠네 > 좌표 어떻게 구해?? > Y값을 담아줘야겠네
+                //    // 아래로 가려면 y값이 커져야해 > ++
+                //    playerX = playerX + 1;
+                //    // 위치 입력 > 캐릭터 출력
+
+
+                //}
 
                 // 잔상이 남는다 > 이전 위치가 출력된다 > 왜 이러지? > 디버그 해보자
                 // 이전 화면이 남기 때문 > 이전 장면을 없애려면 > 초기화 하자
@@ -103,6 +143,50 @@
                 // 어떤 데이터에 무슨 연산을 할 것인가? 이걸 살펴야 한다.
             }
 
+
+
+            // 플레이어와 벽의 충돌 처리
+            // 1. 플레이와와 벽이 충돌했는지 감사한다 >> 플레이어 좌표 == 벽 좌표
+            // 2. 충돌했다면 >> 위치를 원위치 시킨다 > continue; > 반영 안한다
+            // 플레이어의 좌표를 갱신한다 > 다시 값을 넣는다
+            // P#인 상태에서 오른쪽키를 누른 경우 > 다시 왼쪽으로 보낸다 > 어떻게 알어?
+            // (1) 키를 저장했다가 가져온다...
+            // (2) 방향데이터를 파악한다
+            // (3) 움직일 방향을 예측하여 움직임을 반영하지 않는다 > 기존 움직임을 이용하자(이걸로 해보자)
+            // >> 결국 추가데이터가 필요하다
+            // 키를 저장?, 방향데이터? 나중에 점점 물건이 늘어나면...
+            // > 그걸 다 일일이 판별해야하는데 
+            // P@# 같은 경우 어떻게 해야하지??>처리할 데이터가 점점 복잡해진다
+            // 하지만 방향데이터가 있는 것도 좋기에 방향데이터를 쓰긴 할건데
+
+
+
+            // P#인 상태에서 오른쪽키를 누른 경우 > 다시 왼쪽으로 보낸다
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
 
@@ -116,7 +200,7 @@
 
 
 
-            }
-        }
-    }
+            
+        
+    
 }
