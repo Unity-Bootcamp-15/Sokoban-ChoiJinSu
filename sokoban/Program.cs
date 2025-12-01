@@ -22,8 +22,8 @@ Console.Clear();
 
 int mapSizeMinX = 0;
 int mapSizeMinY = 0;
-int mapSizeMaxX = 20;
-int mapSizeMaxY = 20;
+int mapSizeMaxX = 10;
+int mapSizeMaxY = 10;
 
 
 //벽을 만들어라
@@ -35,11 +35,15 @@ int wallY = 3;
 
 
 
-int XPosition = 5;
-int YPosition = 10;
+//int xPosition = 5;
+//int yPosition = 10;
+int xPosition = 4;
+int yPosition = 2;
 
 
-
+// 상자를 만들자
+int boxX = 3;
+int boxY = 1;
 
 // 버퍼 초과 문제 해결법
 
@@ -47,10 +51,11 @@ while (true)
 {
     Console.Clear();
     Console.SetCursorPosition(wallX, wallY);
-    Console.Write("#");
-    Console.SetCursorPosition(XPosition, YPosition);
-    Console.Write("%");
-
+    Console.Write("#"); //벽
+    Console.SetCursorPosition(xPosition, yPosition);
+    Console.Write("%");// 플레이어
+    Console.SetCursorPosition(boxX, boxY);
+    Console.Write("@");// 박스
     ConsoleKeyInfo keyInfo = Console.ReadKey();// 키를 입력 받았다
 
     if (keyInfo.Key == ConsoleKey.DownArrow)
@@ -58,7 +63,7 @@ while (true)
 
         // 아래로간다 > Y가 증가 
 
-        YPosition = Math.Min(mapSizeMaxY, YPosition + 1);
+        yPosition = Math.Min(mapSizeMaxY, yPosition + 1);
 
 
     }
@@ -66,7 +71,7 @@ while (true)
     {
         // 아래로간다 > Y가 증가 
 
-        YPosition = Math.Max(mapSizeMinY, YPosition - 1);
+        yPosition = Math.Max(mapSizeMinY, yPosition - 1);
 
     }
     else if (keyInfo.Key == ConsoleKey.LeftArrow)
@@ -75,12 +80,12 @@ while (true)
         // playerX < 0 > -1 로 오류 >Math라이브러리를 써보자
 
         //Console.SetCursorPosition(newXPosition, newYPosition);
-        XPosition = Math.Max(mapSizeMinX, XPosition - 1);
+        xPosition = Math.Max(mapSizeMinX, xPosition - 1);
 
     }
     else if (keyInfo.Key == ConsoleKey.RightArrow)
     {
-        XPosition = Math.Min(mapSizeMaxX, XPosition + 1);
+        xPosition = Math.Min(mapSizeMaxX, xPosition + 1);
 
     }
     // 플레이어랑 벽과의 충돌 처리
@@ -88,8 +93,10 @@ while (true)
     // 어떤 연산자 : == (같은지?)  > 20,20에 도착하면 "충돌함" 메시지
     //>> 플레이어 좌표 == 벽 좌표
 
-    bool isSamePlayerXAndWallX = XPosition == mapSizeMaxX;
-    bool isSamePlayerYAndWallY = YPosition == mapSizeMaxY;
+    bool isSamePlayerXAndWallX = xPosition == wallX;
+    bool isSamePlayerYAndWallY = yPosition == wallY;
+    
+    
     bool isColliedPlayerWithWall = isSamePlayerXAndWallX && isSamePlayerYAndWallY;
     if (isColliedPlayerWithWall)
     {
@@ -101,37 +108,97 @@ while (true)
         // 왼쪽에서 부딪히면 > 왼쪽으로 보내고
         //XPosition = XPosition - 1;
         // 움직이기 전 좌표를 이용한다.
-
-
-        //    //// 밑에서 부딪힘 > 밑으로 보내고
-        //    //// 위에서 부딪힘 > 위로 보내고
         if (keyInfo.Key == ConsoleKey.DownArrow)
         {
             // 아래로간다 > Y가 증가 
-            YPosition = Math.Min(wallY, YPosition + 1);
+            xPosition = wallX;
+            yPosition = wallY - 1;
 
         }
         else if (keyInfo.Key == ConsoleKey.UpArrow)
         {
             // 위로간다 > Y가 감소 
-            YPosition = Math.Max(wallY, YPosition - 1);
+            xPosition = wallX;
+            yPosition = wallY + 1;
         }
         else if (keyInfo.Key == ConsoleKey.LeftArrow)
         {
 
             // playerX < 0 > -1 로 오류 >Math라이브러리를 써보자
 
-            XPosition = Math.Max(wallX, XPosition - 1);
+            xPosition = wallX + 1;
+            yPosition = wallY;
 
         }
         else if (keyInfo.Key == ConsoleKey.RightArrow)
         {
-            XPosition = Math.Min(wallX, XPosition + 1);
+            xPosition = wallX - 1;
+            yPosition = wallY;
         }
+
+
+
+        //    //// 밑에서 부딪힘 > 밑으로 보내고
+        //    //// 위에서 부딪힘 > 위로 보내고
+
+
     }
 
     // 1. 이전 좌표로 되돌린다
 
+    // 3.박스와 플레이어가 부딪히면
+    // 3-1.박스가 플레이어에게 밀려서 이동된다
+    bool isSamePlayerXAndboxX = xPosition == boxX;
+    bool isSamePlayerYAndboxY = yPosition == boxY;
+
+
+    bool isColliedPlayerWithBox = isSamePlayerXAndboxX && isSamePlayerYAndboxY;
+    if (isColliedPlayerWithBox)
+    {
+        // >> 부딪히면 > 그 전 키를 받아라
+        // > 이동시켜라 > 키의 방향에 맞게 무효화 시켜라, 뒤로 가게 하라
+
+        //오른쪽에서 부딪히면 > 오른쪽으로 보내고
+        //XPosition = XPosition + 1;
+        // 왼쪽에서 부딪히면 > 왼쪽으로 보내고
+        //XPosition = XPosition - 1;
+        // 움직이기 전 좌표를 이용한다.
+        if (keyInfo.Key == ConsoleKey.DownArrow)
+        {
+            // 아래로간다 > Y가 증가 
+           
+            boxY = Math.Min(mapSizeMaxY, yPosition + 1);
+            
+
+        }
+        else if (keyInfo.Key == ConsoleKey.UpArrow)
+        {
+            // 위로간다 > Y가 감소 
+          
+            boxY = Math.Max(mapSizeMinY, yPosition - 1);
+        }
+        else if (keyInfo.Key == ConsoleKey.LeftArrow)
+        {
+
+            // playerX < 0 > -1 로 오류 >Math라이브러리를 써보자
+
+            boxX = Math.Max(mapSizeMinX, xPosition - 1);
+        
+
+        }
+        else if (keyInfo.Key == ConsoleKey.RightArrow)
+        {
+            boxX = Math.Min(mapSizeMaxX, xPosition + 1);
+        
+        }
+
+
+
+        //    //// 밑에서 부딪힘 > 밑으로 보내고
+        //    //// 위에서 부딪힘 > 위로 보내고
+
+
+    }
 
 
 
